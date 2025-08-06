@@ -1,0 +1,57 @@
+# Step 1: Import Required Libraries
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Step 2: Load the Dataset
+df = pd.read_csv("C:/3-Statistics\modified ethnic.csv")  # Make sure the file is in the same folder or give full path
+
+# Step 3: Understand Basic Structure
+print("Shape of the dataset:", df.shape)
+print("\nColumn names:", df.columns)
+print("\nData types:\n", df.dtypes)
+
+# Step 4: Preview the Data
+print("\nFirst 5 rows:\n", df.head())
+
+# Step 5: Summary Statistics
+print("\nSummary statistics (numeric and categorical):\n")
+print(df.describe(include='all'))
+
+# Step 6: Check for Missing Values
+print("\nMissing values in each column:\n", df.isnull().sum())
+
+# Step 7: Check for Duplicates
+print("\nNumber of duplicate rows:", df.duplicated().sum())
+
+# Step 8: Correlation Analysis (for numeric columns)
+numeric_cols = df.select_dtypes(include=np.number)
+print("\nCorrelation Matrix:\n", numeric_cols.corr())
+
+# Step 9: Visualizations
+
+# 9.1: Histograms
+numeric_cols.hist(figsize=(14, 10), bins=20)
+plt.suptitle("Histograms of Numeric Columns")
+plt.show()
+
+# 9.2: Correlation Heatmap
+plt.figure(figsize=(10, 6))
+sns.heatmap(numeric_cols.corr(), annot=True, cmap="coolwarm")
+plt.title("Correlation Heatmap")
+plt.show()
+
+# 9.3: Boxplots for Outlier Detection
+for col in numeric_cols.columns:
+    plt.figure(figsize=(6, 3))
+    sns.boxplot(x=df[col])
+    plt.title(f"Boxplot for {col}")
+    plt.show()
+
+# 9.4: Pairplot (optional, useful for multivariate analysis)
+sns.pairplot(numeric_cols)
+plt.suptitle("Pairwise Plots of Numeric Columns", y=1.02)
+plt.show()
+
+
