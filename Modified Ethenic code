@@ -1,0 +1,48 @@
+# Step 1: Import Required Libraries
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Step 2: Load the Data
+df = pd.read_csv('C:/3-Statistics\mtcars_dup.csv')  # Replace with the correct path if needed
+
+# Step 3: Basic Info
+print("Shape of the dataset:", df.shape)
+print("\nColumn names:", df.columns)
+print("\nData types:\n", df.dtypes)
+
+# Step 4: Preview the Data
+print("\nFirst 5 rows:\n", df.head())
+
+# Step 5: Summary Statistics
+print("\nSummary statistics:\n", df.describe(include='all'))
+
+# Step 6: Check for Missing Values
+print("\nMissing values:\n", df.isnull().sum())
+
+# Step 7: Check for Duplicates
+print("\nNumber of duplicate rows:", df.duplicated().sum())
+
+# Step 8: Correlation Matrix
+corr = df.corr(numeric_only=True)
+print("\nCorrelation Matrix:\n", corr)
+
+# Step 9: Visualizations
+# 9.1 Histograms
+df.hist(bins=15, figsize=(14, 10))
+plt.suptitle("Histograms of Numeric Columns")
+plt.show()
+
+# 9.2 Correlation Heatmap
+plt.figure(figsize=(10, 6))
+sns.heatmap(corr, annot=True, cmap="coolwarm")
+plt.title("Correlation Heatmap")
+plt.show()
+
+# 9.3 Boxplots for Outliers
+numeric_cols = df.select_dtypes(include='number').columns
+for col in numeric_cols:
+    plt.figure(figsize=(6, 3))
+    sns.boxplot(x=df[col])
+    plt.title(f"Boxplot for {col}")
+    plt.show()
