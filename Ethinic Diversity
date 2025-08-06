@@ -1,0 +1,47 @@
+# Step 1: Import Libraries
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Step 2: Load the CSV file
+df = pd.read_csv("C:/3-Statistics\ethnic diversity.csv")  # Replace with your file name
+
+# Step 3: Understand Data Structure
+print("Shape of dataset:", df.shape)
+print("\nColumn names:", df.columns.tolist())
+print("\nData types:\n", df.dtypes)
+
+# Step 4: Preview Data
+print("\nFirst 5 rows:\n", df.head())
+
+# Step 5: Summary Statistics
+print("\nSummary statistics:\n", df.describe(include='all'))
+
+# Step 6: Missing Values
+print("\nMissing values:\n", df.isnull().sum())
+
+# Step 7: Check for Duplicates
+print("\nNumber of duplicate rows:", df.duplicated().sum())
+
+# Step 8: Correlation (for numeric features)
+print("\nCorrelation matrix:\n", df.corr(numeric_only=True))
+
+# Step 9: Visualizations
+# Histogram of all numeric columns
+df.hist(bins=20, figsize=(15, 10))
+plt.suptitle("Histograms of Numeric Columns")
+plt.show()
+
+# Heatmap for correlation
+plt.figure(figsize=(10, 6))
+sns.heatmap(df.corr(numeric_only=True), annot=True, cmap='coolwarm')
+plt.title("Correlation Heatmap")
+plt.show()
+
+# Boxplot to detect outliers
+plt.figure(figsize=(10, 6))
+sns.boxplot(data=df.select_dtypes(include=np.number))
+plt.title("Boxplot for Numeric Features")
+plt.xticks(rotation=90)
+plt.show()
